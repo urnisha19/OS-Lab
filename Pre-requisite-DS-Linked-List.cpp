@@ -5,13 +5,16 @@ using namespace std;
 typedef struct a
 {
     int id;
-    struct a *next, *previous; //location rakar jonno struct a type er pointer variable *next(to traverse next position) *previous(to traverse privious)
-} node; //typedef diye struct a ke node nam e define kore deway just node likhlei sheti struct a mean korbe
+    struct a *next, *previous; 
+    //location rakar jonno struct a type er pointer variable *next *previous
+} node; 
+//typedef diye struct a ke node nam e define kore deway just node likhlei sheti struct a mean korbe
 
 //For a Linked list
 typedef struct
 {
-    node *head, *tail; //1 ta linked list start(*head) and end( *tail) position
+    node *head, *tail; 
+    //1 ta linked list start(*head) and end( *tail) position
 } List;
 
 //1 ta array index diye(e.g a[2]) jevabe amra 1ta variable access korte pari,
@@ -22,6 +25,7 @@ void push(List *list, int id)//here, List=kun list e *list=location and id=value
 {
     //1ta node toiri korbo, jar modde id,*next,*previous 3ta value ache
     node *t=(node *) malloc(sizeof(node));
+    //*t(1ta temporary node pointer) toiri kore item add korar jonno memory allocate
     //function malloc() is used to allocate the requested size of bytes and it returns a pointer to the first byte of allocated memory.
 
     t->id = id;//je value push korbo sheta assign
@@ -37,13 +41,12 @@ void push(List *list, int id)//here, List=kun list e *list=location and id=value
     }
     else
     {
-        list->tail->next = t; //setting next
-        t->previous= list->tail; //setting previous
-        list->tail = t; //tail set kore deowa
+        list->tail->next = t; //setting pointer t to pointer next
+        t->previous= list->tail; //now setting prestent tail pointer as previous
+        list->tail = t; //again tail set kore deowa
     }
     printf("%d has been added %d\n", t->id,t); //t holo node er pointer location ja address dibe
 }
-
 
 //Lab 2
 int pop(List *list)
