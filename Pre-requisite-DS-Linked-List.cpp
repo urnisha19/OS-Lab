@@ -23,8 +23,10 @@ void push(List *list, int id)//here, List=kun list e *list=location and id=value
     //1ta node toiri korbo, jar modde id,*next,*previous 3ta value ache
     node *t=(node *) malloc(sizeof(node));
     //function malloc() is used to allocate the requested size of bytes and it returns a pointer to the first byte of allocated memory.
+
     t->id = id;//je value push korbo sheta assign
     //sturcture er pointer teke member access korar jonno -> use kora hoy. eta shudhu structure hole t.id liktam
+    
     t->next= t->previous=0; //initially assign 0 to avoid garbage value
     //item jodi 1st e take tobe previous takbe na r jodi last e take tobe next takbe na
     //list empty takle head tail same hobe, and next previous empty;
