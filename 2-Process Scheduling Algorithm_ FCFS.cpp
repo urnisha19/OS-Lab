@@ -1,9 +1,9 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#define Priority_Normal 5
-#define Priority_High 1
-#define Priority_Low 10
+#define PRIORITY_NORMAL 5
+#define PRIORITY_HIGH 1
+#define PRIORITY_LOW 10
 
 int PID = 1, CLOCK = 0, TotalWaitingTime = 0, TotalProcessExecuted = 0;
 
@@ -12,7 +12,7 @@ typedef struct a
     int pid, priority;
     int burstTime, arrivalTime, waitingTime, turnAroundTime;
     struct a *next, *previous;
-} PCB; //Process Control Blog
+} PCB; //Process Control Block
 
 typedef struct
 {
@@ -21,13 +21,13 @@ typedef struct
 
 void printQueue(Queue *q)
 {
-    PCB *pn = q->head;
+    PCB *pointer = q->head;
     printf("\nPID\t CPUBurst\t Arrival\t Waiting\t NodeLocation\n");
-    while(pn != 0)
+    while(pointer != 0)
     {
         printf("%3d %8d %15d %15d %15d\n",
-               pn->pid,pn->burstTime,pn->arrivalTime,pn->waitingTime,pn);
-        pn=pn->next;
+               pointer->pid,pointer->burstTime,pointer->arrivalTime,pointer->waitingTime,pointer);
+        pointer=pointer->next;
     }
 }
 
@@ -39,11 +39,14 @@ void insertProcess(Queue *q, int burst, int priority)
     //set values for new process
     newProcess->pid = PID++;
     newProcess->arrivalTime = CLOCK;
+
     newProcess->burstTime = burst;
     newProcess->priority = priority;
+
     newProcess->waitingTime = -1;
     newProcess->turnAroundTime = -1;
 
+    //Link Setup
     if(q->head == 0)
     {
         q->head = q->tail = newProcess;
@@ -56,7 +59,6 @@ void insertProcess(Queue *q, int burst, int priority)
     }
 }
 
-//Lab 4
 PCB deQueue(Queue *list)
 {
     PCB t;
@@ -77,24 +79,27 @@ void executeProcess(Queue *rq)
     {
         PCB r = deQueue(rq);
         printf("\n\nProcess %d is being Processed", r.pid);
-        r.waitingTime = CLOCK - r.arrivalTime;
+
+        r.waitingTime = CLOCK - r.arrivalTime; //waitingTime=starting time(CLOCK) of a process - arrival time
         TotalWaitingTime += r.waitingTime;
+
         CLOCK += r.burstTime;
+
         printf("\n Waiting time for Process-%d is %d",r.pid, r.waitingTime);
         printf("\nAfter Completion, CLOCK-%d", CLOCK);
+
         TotalProcessExecuted++;
     }
 }
-//lab 4 end
 
 main()
 {
     Queue *readyQ = (Queue *) malloc(sizeof(Queue));
     readyQ->head = readyQ->tail = 0;
 
-    insertProcess(readyQ, 10, Priority_Normal);
-    insertProcess(readyQ, 5, Priority_Normal);
-    insertProcess(readyQ, 20, Priority_Normal);
+    insertProcess(readyQ, 10, PRIORITY_NORMAL);
+    insertProcess(readyQ, 5, PRIORITY_NORMAL);
+    insertProcess(readyQ, 20, PRIORITY_NORMAL);
 
     printQueue(readyQ);
     //deQueue(readyQ);
